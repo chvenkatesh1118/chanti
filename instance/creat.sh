@@ -1,2 +1,6 @@
 #!/bin/bash
- touch chanti
+
+@rm -rf .terraform
+
+@terraform init
+	@terraform apply -auto-approve
