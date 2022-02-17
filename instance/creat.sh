@@ -2,6 +2,6 @@
 
 rm -rf .terraform
 
-terraform init
-terraform plan
+terraform init -backend-config=terraform-terraform.tfstate
+
 terraform apply -auto-approve
