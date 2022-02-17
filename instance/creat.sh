@@ -2,6 +2,6 @@
 
 rm -rf .terraform
 
-terraform init -backend-config=terraform/ec2
+terraform init -backend-config=ec2/terraform.tfsate
 
 terraform apply -auto-approve
