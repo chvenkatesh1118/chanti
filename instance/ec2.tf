@@ -1,5 +1,6 @@
 
 resource "aws_security_group" "sg1" {
+    region =  "us-east-1"
 
   name        = "sg1"
   description = "Allow TLS inbound traffic"
