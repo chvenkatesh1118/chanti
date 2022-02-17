@@ -2,7 +2,7 @@
 terraform {
   backend  "s3"  {
     bucket =  "chanti.ch"
-    key = "terraform.tfstate"
+    key = "s3://chanti.ch/terraform/.terrafom/terraform.statefile"
     region = "us-east-1"
   }
 }
