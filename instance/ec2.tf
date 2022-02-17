@@ -1,6 +1,6 @@
 
-module "aws_security_group" "sg1" {
- source = "terraform-aws-modules/security-group/aws"
+resources "aws_security_group" "sg1" {
+
   name        = "sg1"
   description = "Allow TLS inbound traffic"
   vpc_id      = "vpc-0bf57a4f41c708816"
