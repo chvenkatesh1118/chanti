@@ -1,4 +1,8 @@
 
+provider "aws" {
+  region = "us-east-1"
+}
+
 resource "aws_security_group" "sg1" {
     region =  "us-east-1"
 
