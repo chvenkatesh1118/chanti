@@ -1,6 +1,3 @@
-provider "aws" {
-  region = "us-east-1"
-}
 
 resource "aws_security_group" "sg1" {
  source = "terraform-aws-modules/security-group/aws"
