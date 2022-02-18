@@ -2,6 +2,6 @@
 
 
 
-terraform init -backend-config=backend.tfvars
+terraform init -backend-config=terraform.tfstate
 
 terraform apply -auto-approve
