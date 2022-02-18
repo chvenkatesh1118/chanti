@@ -1,9 +1,5 @@
 #!/bin/bash
 
-provider "aws" {
-  region = "us-east-1"
-}
-
 
 rm -rf .terraform
 
