@@ -1,7 +1,7 @@
 #!/bin/bash
 
-rm -rf .terraform
 
-terraform init
+
+terraform init -backend-config=backend.tf
 
 terraform apply -auto-approve
