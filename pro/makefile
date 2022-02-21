@@ -1,5 +1,5 @@
-apply:
-  @terraform init
+creat:
+  @terraform init backend-config=chanti/terraform.tfstate
   @terraform apply -auto-approve
 
 destroy:
