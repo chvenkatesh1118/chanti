@@ -1,4 +1,4 @@
-creat: clean
+creat:
 	@rm -rf .terraform
 	@terraform init backend-config=chanti/terraform.tfstate
 	@terraform apply -auto-approve
