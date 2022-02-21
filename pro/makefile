@@ -1,5 +1,3 @@
-
-	@rm -rf .terraform
 creat: clean
 	@rm -rf .terraform
 	@terraform init backend-config=chanti/terraform.tfstate
