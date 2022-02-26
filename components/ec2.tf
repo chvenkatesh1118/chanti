@@ -39,4 +39,3 @@ resource "aws_security_group" "sg" {
     Name = "all2"
   }
 }
-NOTE
