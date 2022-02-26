@@ -7,3 +7,7 @@ resource "aws_instance" "instance" {
     Name = "var.NAME"
   }
 }
+
+provider "aws" {
+  region = "us-east-1"
+}
