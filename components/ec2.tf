@@ -40,7 +40,7 @@ resource "aws_security_group" "all2" {
   }
 }
 
-r
+
 
 output "all2" {
   value = aws_security_group.all2.id
