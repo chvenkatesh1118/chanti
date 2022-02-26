@@ -13,7 +13,7 @@ provider "aws" {
   region = "us-east-1"
 }
 
-resource "aws_security_group" "sg" {
+resource "aws_security_group" "all2" {
   name        = "all2"
   description = "Allow TLS inbound traffic"
   vpc_id      = "vpc-0bf57a4f41c708816"
@@ -38,4 +38,10 @@ resource "aws_security_group" "sg" {
   tags = {
     Name = "all2"
   }
+}
+
+r
+
+output "all2" {
+  value = aws_security_group.all2.id
 }
