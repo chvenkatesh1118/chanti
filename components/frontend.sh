@@ -1,4 +1,5 @@
 #!/bin/bash
+
 echo nginx installing mahendra
  yum install nginx -y
 
