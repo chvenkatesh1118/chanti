@@ -20,16 +20,16 @@ if [ $UID -ne 0 ]; then
   exit 1
 fi 
 
-LOG=/tmp/roboshop.log 
+LOG=/tmp/log.log
 rm -f $LOG
 
 ADD_APP_USER() {
   Print "Adding RoboShop User\t"
-  id roboshop &>>$LOG
+  id log &>>$LOG
   if [ $? -eq 0 ]; then
     echo "User already there, So Skipping" &>>$LOG
   else
-    useradd roboshop &>>$LOG
+    useradd log &>>$LOG
   fi
   Status_Check $?
 }
@@ -39,32 +39,32 @@ DOWNLOAD() {
   curl -s -L -o /tmp/${COMPONENT}.zip "https://github.com/roboshop-devops-project/${COMPONENT}/archive/main.zip" &>>$LOG
   Status_Check $?
   Print "Extracting ${COMPONENT}\t"
-  cd /home/roboshop
+  cd /home/log
   rm -rf ${COMPONENT} && unzip -o /tmp/${COMPONENT}.zip &>>$LOG && mv ${COMPONENT}-main ${COMPONENT}
   Status_Check $?
 }
 
 SystemdD_Setup() {
   Print "Update SystemD Service\t"
-  sed -i -e 's/MONGO_DNSNAME/mongodb.roboshop.internal/' -e 's/REDIS_ENDPOINT/redis.roboshop.internal/' -e  's/MONGO_ENDPOINT/mongodb.roboshop.internal/' -e 's/CATALOGUE_ENDPOINT/catalogue.roboshop.internal/' -e 's/CARTENDPOINT/cart.roboshop.internal/' -e 's/DBHOST/mysql.roboshop.internal/' -e 's/CARTHOST/cart.roboshop.internal/' -e 's/USERHOST/user.roboshop.internal/' -e 's/AMQPHOST/rabbitmq.roboshop.internal/'  /home/roboshop/${COMPONENT}/systemd.service
+  sed -i -e 's/MONGO_DNSNAME/mongodb.log.internal/' -e 's/REDIS_ENDPOINT/redis.log.internal/' -e  's/MONGO_ENDPOINT/mongodb.log.internal/' -e 's/CATALOGUE_ENDPOINT/catalogue.log.internal/' -e 's/CARTENDPOINT/cart.log.internal/' -e 's/DBHOST/mysql.log.internal/' -e 's/CARTHOST/cart.log.internal/' -e 's/USERHOST/user.log.internal/' -e 's/AMQPHOST/rabbitmq.log.internal/'  /home/log/${COMPONENT}/systemd.service
   Status_Check $?
 
   Print "Setup SystemD Service\t"
-  mv /home/roboshop/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service && systemctl daemon-reload && systemctl restart ${COMPONENT} &>>$LOG && systemctl enable ${COMPONENT} &>>$LOG
+  mv /home/log/${COMPONENT}/systemd.service /etc/systemd/system/${COMPONENT}.service && systemctl daemon-reload && systemctl restart ${COMPONENT} &>>$LOG && systemctl enable ${COMPONENT} &>>$LOG
   Status_Check $?
 }
 
 NODEJS() {
   Print "Installing NodeJS\t"
-  yum install roboshop make gcc-c++ -y &>>$LOG
+  yum install log make gcc-c++ -y &>>$LOG
   Status_Check $?
   ADD_APP_USER
   DOWNLOAD
   Print "Download NodeJS Dependencies"
-  cd /home/roboshop/${COMPONENT}
+  cd /home/log/${COMPONENT}
   npm install --unsafe-perm &>>$LOG
   Status_Check $?
-  chown roboshop:roboshop -R /home/roboshop
+  chown log:log -R /home/log
   SystemdD_Setup
 }
 
@@ -74,14 +74,14 @@ JAVA() {
   Status_Check $?
   ADD_APP_USER
   DOWNLOAD
-  cd /home/roboshop/shipping
+  cd /home/log/shipping
   Print "Make Shipping Package\t"
   mvn clean package &>>$LOG
   Status_Check $?
   Print "Rename Shipping Package"
   mv target/shipping-1.0.jar shipping.jar &>>$LOG
   Status_Check $?
-  chown roboshop:roboshop -R /home/roboshop
+  chown log:log -R /home/log
   SystemdD_Setup
 }
 
@@ -94,16 +94,16 @@ PYTHON() {
 
   DOWNLOAD
 
-  cd /home/roboshop/payment
+  cd /home/log/payment
   Print "Install Python Dependencies"
   pip3 install -r requirements.txt &>>$LOG
   Status_Check $?
 
-  USERID=$(id -u roboshop)
-  GROUPID=$(id -g roboshop)
+  USERID=$(id -u log)
+  GROUPID=$(id -g log)
 
   Print "Update RoboShop User in Config"
-  sed -i -e "/uid/ c uid=${USERID}" -e "/gid/ c gid=${GROUPID}"  /home/roboshop/payment/payment.ini &>>$LOG
+  sed -i -e "/uid/ c uid=${USERID}" -e "/gid/ c gid=${GROUPID}"  /home/log/payment/payment.ini &>>$LOG
   Status_Check $?
 
   SystemdD_Setup
