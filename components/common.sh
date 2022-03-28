@@ -56,7 +56,7 @@ SystemdD_Setup() {
 
 NODEJS() {
   Print "Installing NodeJS\t"
-  yum install nodejs make gcc-c++ -y &>>$LOG
+  yum install roboshop make gcc-c++ -y &>>$LOG
   Status_Check $?
   ADD_APP_USER
   DOWNLOAD
