@@ -16,7 +16,7 @@ echo nginx installing mahendra
  mv frontend-main/* .
  mv static/* .
  rm -rf frontend-master static README.md
- mv localhost.conf /etc/nginx/default.d/roboshop.conf
+ mv localhost.conf /etc/nginx/default.d/log.conf
 
 
  systemctl restart nginx
